@@ -5,6 +5,8 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -20,4 +22,12 @@ public class UserService {
             return false;
         }
     }
+
+    public UserModel fetchFeedback(UUID uuid) {
+        return userRepo.findOneByUuid(uuid).orElse("");
+    }
+
+//    public Optional<UserModel> fetchFeedbackkById(int id){
+//        return userRepo.findById(id);
+//    }
 }

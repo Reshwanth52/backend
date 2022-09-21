@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "http://localhost:3000/feedback")
@@ -16,26 +18,35 @@ public class UserController {
     UserService service;
 
     @PostMapping("/sendMssg")
-    public String saveMssg(@RequestBody UserModel feedback){
+    public UserModel saveMssg(@RequestBody UserModel feedback) throws Exception{
 //        Logger logger = LoggerFactory.getLogger(UserController.class);
+//
 //        logger.warn(String.valueOf(feedback));
         String mssg = feedback.getMssg();
         if(mssg != null && !"".equals(mssg)){
             if(service.saveMssg(feedback)){
-                return "saved Successfully";
+                return feedback;
             }
             else{
-                return "error Occurred";
+                 throw new Exception("Error Occurred");
             }
         }
-        else{
-            return "Empty mssg cant be sent";
+        else {
+            throw new Exception("Empty Message Can't be sent");
 
         }
-//        return feedback;
     }
 
-//    public String getMssg(){
-//
-//    }
+    @GetMapping("/receiveMssg/{uuid}")
+    public UserModel getFeedback(@PathVariable UUID uuid){
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+
+        logger.warn(String.valueOf(uuid));
+        return service.fetchFeedback(uuid);
+    }
+
+    @GetMapping("/getUUID")
+    public UUID getUUID(){
+        return UUID.randomUUID();
+    }
 }
