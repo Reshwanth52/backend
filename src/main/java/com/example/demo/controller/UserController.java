@@ -19,9 +19,9 @@ public class UserController {
 
     @PostMapping("/sendMssg")
     public UserModel saveMssg(@RequestBody UserModel feedback) throws Exception{
-//        Logger logger = LoggerFactory.getLogger(UserController.class);
-//
-//        logger.warn(String.valueOf(feedback));
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+
+        logger.warn(String.valueOf(feedback));
         String mssg = feedback.getMssg();
         if(mssg != null && !"".equals(mssg)){
             if(service.saveMssg(feedback)){
@@ -40,13 +40,14 @@ public class UserController {
     @GetMapping("/receiveMssg/{uuid}")
     public UserModel getFeedback(@PathVariable UUID uuid){
         Logger logger = LoggerFactory.getLogger(UserController.class);
-
-        logger.warn(String.valueOf(uuid));
+        System.out.println("hello..................");
+        logger.warn(String.valueOf(service.fetchFeedback(uuid)));
         return service.fetchFeedback(uuid);
     }
 
     @GetMapping("/getUUID")
     public UUID getUUID(){
         return UUID.randomUUID();
+
     }
 }

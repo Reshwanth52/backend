@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.model.UserModel;
 import com.example.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -24,10 +27,20 @@ public class UserService {
     }
 
     public UserModel fetchFeedback(UUID uuid) {
-        return userRepo.findOneByUuid(uuid).orElse("");
+        return userRepo.findOneByUuid(uuid);
     }
 
-//    public Optional<UserModel> fetchFeedbackkById(int id){
-//        return userRepo.findById(id);
-//    }
+    @Scheduled(cron="* */5 * * * *")
+    public void test(){
+
+        Logger logger = LoggerFactory.getLogger(UserService.class);
+
+        logger.warn(String.valueOf("Testing ..."));
+
+//        throw new RuntimeException("Time Limit Exceed");
+
+        System.exit(0);
+
+    }
+
 }
