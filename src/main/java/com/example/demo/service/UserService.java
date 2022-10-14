@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public boolean saveMessage(UserModel feedback) {
         try {

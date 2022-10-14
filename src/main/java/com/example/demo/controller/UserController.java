@@ -1,19 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.VsapApplication;
 import com.example.demo.model.UserModel;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "http://localhost:3000/feedback")
 public class UserController {
-
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/sendMessage")
     public UserModel saveMessage(@RequestBody UserModel feedback) throws Exception {
@@ -38,5 +39,15 @@ public class UserController {
     @GetMapping("/getUUID")
     public UUID getUUID() {
         return UUID.randomUUID();
+    }
+
+    @PostMapping("/isValid")
+    public void checkExpiration(@RequestBody Date date) {
+        VsapApplication vsapApplication = new VsapApplication();
+        long value = date.getTime() - vsapApplication.referenceTime.getTime();
+        long differenceInMinutes = (value / (1000 * 60)) % 60;
+        if (differenceInMinutes < 5) {
+            System.exit(0);
+        }
     }
 }
