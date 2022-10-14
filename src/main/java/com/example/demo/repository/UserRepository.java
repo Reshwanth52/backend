@@ -7,6 +7,5 @@ import java.util.UUID;
 
 
 public interface UserRepository extends JpaRepository<UserModel, Integer> {
-
     UserModel findOneByUuid(UUID uuid);
 }

@@ -14,15 +14,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "sequence-generator")
     private int id;
-
 
     @Column(unique = true)
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID uuid;
 
-    private String mssg;
+    private String message;
 }
