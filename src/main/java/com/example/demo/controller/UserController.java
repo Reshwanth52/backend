@@ -27,10 +27,8 @@ public class UserController {
             }
         } else {
             throw new Exception("Empty Message Can't be sent");
-
         }
     }
-
     @GetMapping("/receiveMessage/{uuid}")
     public UserModel getFeedback(@PathVariable UUID uuid) {
         return userService.fetchFeedback(uuid);
@@ -41,13 +39,4 @@ public class UserController {
         return UUID.randomUUID();
     }
 
-    @PostMapping("/isValid")
-    public void checkExpiration(@RequestBody Date date) {
-        VsapApplication vsapApplication = new VsapApplication();
-        long value = date.getTime() - vsapApplication.referenceTime.getTime();
-        long differenceInMinutes = (value / (1000 * 60)) % 60;
-        if (differenceInMinutes < 5) {
-            System.exit(0);
-        }
-    }
 }
