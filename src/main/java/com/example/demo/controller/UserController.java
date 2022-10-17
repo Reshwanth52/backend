@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.VsapApplication;
 import com.example.demo.model.UserModel;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +27,7 @@ public class UserController {
             throw new Exception("Empty Message Can't be sent");
         }
     }
+
     @GetMapping("/receiveMessage/{uuid}")
     public UserModel getFeedback(@PathVariable UUID uuid) {
         return userService.fetchFeedback(uuid);
@@ -38,5 +37,4 @@ public class UserController {
     public UUID getUUID() {
         return UUID.randomUUID();
     }
-
 }
